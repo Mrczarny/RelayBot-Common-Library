@@ -1,0 +1,24 @@
+{
+    "name": "RelayBot-Common-Library",
+    "version": "1.0.0",
+    "description": "Common library for RelayBot",
+    "keywords": "relaybot, common, library",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/Mrczarny/RelayBot-Common-Library"
+    },
+    "authors":
+    [
+      {
+        "name": "Jan Adamski",
+        "email": "adamski.jj@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "dependencies": {
+    },
+    "frameworks": "arduino",
+    "platforms": "atmelavr"
+  }

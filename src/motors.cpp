@@ -1,53 +1,66 @@
 #include "motors.h"
 
 
+void Motors::setup(
+  int maxLeftForwardSpeed,
+  int maxRightForwardSpeed,
+  int maxLeftBackwardSpeed,
+  int maxRightBackwardSpeed
+) {
+  _maxLeftForwardSpeed = maxLeftForwardSpeed;
+  _maxRightForwardSpeed = maxRightForwardSpeed;
+  _maxLeftBackwardSpeed = maxLeftBackwardSpeed;
+  _maxRightBackwardSpeed = maxRightBackwardSpeed;
+}
+
+
 void Motors::forward() {
-  analogWrite(_leftMotorPin1, _maxSpeed);
-  analogWrite(_leftMotorPin2, 0);
-  analogWrite(_rightMotorPin1, _maxSpeed);
-  analogWrite(_rightMotorPin2, 0);
+  analogWrite(_leftMotorForwardPin, _maxLeftForwardSpeed);
+  analogWrite(_leftMotorBackwardPin, 0);
+  analogWrite(_rightMotorForwardPin, _maxRightForwardSpeed);
+  analogWrite(_rightMotorBackwardPin, 0);
 }
 
 void Motors::backward() {
-  analogWrite(_leftMotorPin1, 0);
-  analogWrite(_leftMotorPin2, _maxSpeed);
-  analogWrite(_rightMotorPin1, 0);
-  analogWrite(_rightMotorPin2, _maxSpeed);
+  analogWrite(_leftMotorForwardPin, 0);
+  analogWrite(_leftMotorBackwardPin, _maxLeftBackwardSpeed);
+  analogWrite(_rightMotorForwardPin, 0);
+  analogWrite(_rightMotorBackwardPin, _maxRightBackwardSpeed);
 }
 
 void Motors::zeroLeft() {
-  analogWrite(_leftMotorPin1, _maxSpeed);
-  analogWrite(_leftMotorPin2, 0);
-  analogWrite(_rightMotorPin1, 0);
-  analogWrite(_rightMotorPin2, _maxSpeed);
+  analogWrite(_leftMotorForwardPin, _maxLeftBackwardSpeed);
+  analogWrite(_leftMotorBackwardPin, 0);
+  analogWrite(_rightMotorForwardPin, 0);
+  analogWrite(_rightMotorBackwardPin, _maxRightBackwardSpeed);
 }
 
 void Motors::zeroRight() {
-  analogWrite(_leftMotorPin1, 0);
-  analogWrite(_leftMotorPin2, _maxSpeed);
-  analogWrite(_rightMotorPin1, _maxSpeed);
-  analogWrite(_rightMotorPin2, 0);
+  analogWrite(_leftMotorForwardPin, 0);
+  analogWrite(_leftMotorBackwardPin, _maxLeftBackwardSpeed);
+  analogWrite(_rightMotorForwardPin, _maxRightBackwardSpeed);
+  analogWrite(_rightMotorBackwardPin, 0);
 }
 
 void Motors::right() {
-  analogWrite(_leftMotorPin1, _maxSpeed);
-  analogWrite(_leftMotorPin2, 0);
-  analogWrite(_rightMotorPin1, _maxSpeed*0.7);
-  analogWrite(_rightMotorPin2, 0);
+  analogWrite(_leftMotorForwardPin, _maxLeftForwardSpeed);
+  analogWrite(_leftMotorBackwardPin, 0);
+  analogWrite(_rightMotorForwardPin, _maxRightForwardSpeed*0.7);
+  analogWrite(_rightMotorBackwardPin, 0);
 }
 
 void Motors::left() {
-  analogWrite(_leftMotorPin1, _maxSpeed*0.7);
-  analogWrite(_leftMotorPin2, 0);
-  analogWrite(_rightMotorPin1, _maxSpeed);
-  analogWrite(_rightMotorPin2, 0);
+  analogWrite(_leftMotorForwardPin, _maxLeftForwardSpeed*0.7);
+  analogWrite(_leftMotorBackwardPin, 0);
+  analogWrite(_rightMotorForwardPin, _maxRightForwardSpeed);
+  analogWrite(_rightMotorBackwardPin, 0);
 }
 
 void Motors::stop() {
-  analogWrite(_leftMotorPin1, 0);
-  analogWrite(_leftMotorPin2, 0);
-  analogWrite(_rightMotorPin1, 0);
-  analogWrite(_rightMotorPin2, 0);
+  analogWrite(_leftMotorForwardPin, 0);
+  analogWrite(_leftMotorBackwardPin, 0);
+  analogWrite(_rightMotorForwardPin, 0);
+  analogWrite(_rightMotorBackwardPin, 0);
 }
 
 

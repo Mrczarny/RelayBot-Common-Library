@@ -3,23 +3,23 @@
 
 #include "Arduino.h"
 
-/// @brief line sensor array data for max 8 sensors
-typedef struct lineSensorData
-{
-    /// @brief array of line points
-    linePoint linePoints[8];
-};
-
 
 /// @brief single line sensor
-typedef struct linePoint
+struct linePoint
 {
     /// @brief position of the sensor from left to right
     int pointPosition;
     /// @brief value of the sensor
+    long sensorValue;
     boolean isLine;
-};
+} typedef linePoint;
 
+/// @brief line sensor array data for max 8 sensors
+struct lineSensorData
+{
+    /// @brief array of line points
+    linePoint linePoints[8];
+} typedef lineSensorData;
 
 
 
@@ -29,6 +29,7 @@ class Line
 private:
     int _sensorsNumber;
     int _sensorPins[8] = {NULL};
+    int _breakPoints[8] = {NULL};
 public:
     Line(int sensorsNumber, int sensorPins[8]){
         _sensorsNumber = sensorsNumber;
@@ -42,7 +43,8 @@ public:
             _sensorPins[i] = sensorPins[i];
         }
     };
-    void setup();
+    void setup(int breakPoint);
+    void setup(int breakPoints[]);
     lineSensorData readLine();
     linePoint readLinePoint(int pointPosition);
 };

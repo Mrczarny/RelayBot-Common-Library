@@ -1,7 +1,17 @@
 #include "line.h"
 
-void Line::setup() {
-    return;
+void Line::setup(int breakPoint) {
+    for (int i = 0; i < _sensorsNumber; i++)
+    {
+        _breakPoints[i] = breakPoint;
+    }
+}
+
+void Line::setup(int breakPoints[]) {
+    for (int i = 0; i < _sensorsNumber; i++)
+    {
+        _breakPoints[i] = breakPoints[i];
+    }
 }
 
 lineSensorData Line::readLine() {
@@ -15,11 +25,15 @@ lineSensorData Line::readLine() {
 
 linePoint Line::readLinePoint(int pointPosition) {
     linePoint data;
+    data.pointPosition = -1;
+    data.sensorValue = -1;
     if (_sensorPins[pointPosition] != NULL)
     {
         data.pointPosition = pointPosition;
-        data.isLine = digitalRead(_sensorPins[pointPosition]) ? true : false;
+        data.sensorValue = analogRead(_sensorPins[pointPosition]);
+        data.sensorValue > _breakPoints[pointPosition] ? data.isLine = true : data.isLine = false;
     }
+
     return data;
 }
 

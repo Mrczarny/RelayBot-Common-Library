@@ -31,6 +31,9 @@ private:
     int _sensorPins[8] = {NULL};
     int _breakPoints[8] = {NULL};
 public:
+    /// @brief Construct a new Line object with the number of sensors and the pins
+    /// @param sensorsNumber Number of sensors
+    /// @param sensorPins sensor pins in order from left to right, leave NULL if not used
     Line(int sensorsNumber, int sensorPins[8]){
         _sensorsNumber = sensorsNumber;
         for (int i = 0; i < sensorsNumber; i++) {

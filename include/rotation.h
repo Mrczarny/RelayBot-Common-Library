@@ -15,10 +15,9 @@ class Rotation
 {
 public:
     Rotation(int leftMotorRotation, int rightMotorRotation);
-    void setup(
-        int leftCount,
-        int rightCount, 
-        Motors* motors);
+    void setup(Motors *motors,
+               int leftCount = 0,
+               int rightCount = 0);
     void moveForwardFor(int distance);
     void moveBackwardFor(int distance);
     void turnDegreesRight(int degrees);
@@ -27,7 +26,7 @@ public:
 private:
     int _leftMotorRotationPin;
     int _rightMotorRotationPin;
-    Motors* _motors;
+    Motors *_motors;
 };
 
 #endif

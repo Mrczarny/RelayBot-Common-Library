@@ -6,7 +6,6 @@ int _rightRotationPinInternal;
 
 static void leftRotationCheck()
 {
-    //Serial.println("left");
     static unsigned long timer;
     static bool lastState;
     noInterrupts();
@@ -16,9 +15,6 @@ static void leftRotationCheck()
         if (state != lastState)
         {
             _leftCount++;
-            // Serial.print("l");
-            // Serial.print(_leftCount);
-            // Serial.print("\n");
             lastState = state;
         }
         timer = millis() + COUNT_INTERVAL;
@@ -37,9 +33,6 @@ static void rightRotationCheck()
         if (state != lastState)
         {
             _rightCount++;
-            // Serial.print("r");
-            // Serial.print(_rightCount);
-            // Serial.print("\n");
             lastState = state;
         }
         timer = millis() + COUNT_INTERVAL;
@@ -47,6 +40,9 @@ static void rightRotationCheck()
     interrupts();
 }
 
+/// @brief Construct a new Rotation:: Rotation object
+/// @param leftMotorRotation left motor rotation pin
+/// @param rightMotorRotation right motor rotation pin
 Rotation::Rotation(int leftMotorRotation, int rightMotorRotation)
 {
     _leftMotorRotationPin = leftMotorRotation;
@@ -58,10 +54,15 @@ Rotation::Rotation(int leftMotorRotation, int rightMotorRotation)
     pinMode(_rightMotorRotationPin, INPUT_PULLUP);
 }
 
+
+/// @brief Setup the rotation object, needs to be called before any other function
+/// @param leftCount start number of left count
+/// @param rightCount start number of right count
+/// @param motors pointer to the motors object to be used
 void Rotation::setup(
-    int leftCount,
-    int rightCount,
-    Motors* motors)
+    Motors* motors,
+    int leftCount = 0,
+    int rightCount = 0)
 {
     attachInterrupt(digitalPinToInterrupt(_leftMotorRotationPin), leftRotationCheck, CHANGE);
     attachInterrupt(digitalPinToInterrupt(_rightMotorRotationPin), rightRotationCheck, CHANGE);
@@ -72,16 +73,13 @@ void Rotation::setup(
     _rightRotationPinInternal = _rightMotorRotationPin;
 }
 
-void Rotation::moveForwardFor( int distance)
+/// @brief Just moves forward for a certain distance
+/// @param distance distance in cm to move forward
+void Rotation::moveForwardFor(int distance)
 {
     int steps = (distance / _wheelC) * 40;
     int leftSteps = _leftCount + steps;
     int rightSteps = _rightCount + steps;
-    // Serial.println(steps);
-    // Serial.println(leftEnd);
-    // Serial.println(rightEnd);
-    // Serial.println(leftSteps);
-    // Serial.println(rightSteps);
 
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
@@ -94,6 +92,8 @@ void Rotation::moveForwardFor( int distance)
     // Serial.println("done");
 }
 
+/// @brief Just moves backward for a certain distance
+/// @param distance distance in cm to move backward
 void Rotation::moveBackwardFor(int distance)
 {
     int steps = (distance / _wheelC) * 40;
@@ -106,48 +106,46 @@ void Rotation::moveBackwardFor(int distance)
     {
         // Somehow it's bugged without this 
         Serial.println(_leftCount);
-        //Serial.println(_rightCount);
         _motors->backward();
     }
-    //Serial.println("done");
     _motors->stop();
 }
 
+
+/// @brief turns the robot right by a certain number of degrees
+/// @details accurancy is right now around 10 degrees
+/// @param degrees number of degrees to turn right
 void Rotation::turnDegreesRight(int degrees)
 {
     int steps = ((float)degrees / 360 * RobotC) / _wheelC * 40;
     int leftSteps = _leftCount + steps;
     int rightSteps = _rightCount + steps;
 
-    //Serial.println(steps);
-
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
         // Somehow it's bugged without this 
-        Serial.println(_leftCount);
-        //Serial.println(_rightCount);
+        Serial.println("s");
         _motors->zeroRight();
     }
-    //Serial.println("done");
     _motors->stop();
 }
 
+
+/// @brief turns the robot left by a certain number of degrees
+/// @param degrees amount of degrees to turn left
+/// @details accurancy is right now around 10 degrees
 void Rotation::turnDegreesLeft(int degrees)
 {
     int steps = ((float)degrees / 360 * RobotC) / _wheelC * 40;
     int leftSteps = _leftCount + steps;
     int rightSteps = _rightCount + steps;
 
-    //Serial.println(steps);
-
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
         // Somehow it's bugged without this 
         Serial.println(_leftCount);
-        //Serial.println(_rightCount);
         _motors->zeroLeft();
     }
-    //Serial.println("done");
     _motors->stop();
 }
 

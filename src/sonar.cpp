@@ -14,7 +14,7 @@ int Sonar::getSonar(){
     timeToRecord = pulseIn(_EchoPin, HIGH); //will return how long it took the sensor to recive a wave
     //if 0 then error occurd
     if(timeToRecord==0){
-        Serial.println("Error getting distance");
+        //Serial.println("Error getting distance");
         return 0;
     }else{
         distance = (timeToRecord * 0.0343) / 2; //distance = time*speed of sound per milisecond / 2 (travels to object and back) 
@@ -41,14 +41,14 @@ int Sonar::getDistance() {
             // Check if both readings are valid and within the acceptable variance
             if (distance1 >= 0 && distance2 >= 0 && abs(distance1 - distance2) <= MAX_VARIANCE) {
                 // If readings are valid and consistent, print success and return 1
-                Serial.println("Correct");
+                //Serial.println("Correct");
                 time += 500;
                 return distance1;  // Valid and consistent readings
             }
         }
 
         // If all attempts fail, print failure and return 0
-        Serial.println("Fail");
+        //Serial.println("Fail");
         time += 500;
         return 0;  // Failed after multiple attempts
     }

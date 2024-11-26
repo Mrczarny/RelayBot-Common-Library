@@ -15,7 +15,7 @@ class Sonar {
     }
     void setup();
     int getDistance();
-    int test_distance();
+    int getSonar();
     private:
     int _TriggerPin;
     int _EchoPin;

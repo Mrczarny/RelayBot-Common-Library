@@ -1,11 +1,11 @@
 #include "gripper.h"
 
-unsigned long time2 = 0;
+unsigned long time = 0;
 void Gripper::gripper(int position){
-  if (millis() > time2){ 
+  if (millis() > time ){ 
     digitalWrite(_ServoPin, HIGH); 
     delay(position);
     digitalWrite(_ServoPin, LOW);
-    delay(20);
+    time += 20;
   }
 }

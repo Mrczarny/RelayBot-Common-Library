@@ -1,8 +1,8 @@
 #include "gripper.h"
 
+unsigned long time2 = 0;
 void Gripper::gripper(int position){
-  for(int x=0; x < 40; x++){
-    Serial.println(x);
+  if (millis() > time2){ 
     digitalWrite(_ServoPin, HIGH); 
     delay(position);
     digitalWrite(_ServoPin, LOW);

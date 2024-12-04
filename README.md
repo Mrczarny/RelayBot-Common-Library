@@ -43,7 +43,7 @@ This document outlines the technical design of the system, including the archite
 - Reset Arduino Nano
 
 ## Contents of the Library
-The bulk of this project has been coded in C++ for Arduino, with PlatformIO in Visual Studio Code, and shared between the group via GIT. The website development has been done in HTML with Python, and the Database is developed with SQL with Python. This Project follows our Groups Code of Conduct in Development, which includes but is not limited to, Refrain from using Chat GPT, Ask Questions When Stuck, and Work in Collaboration with each other. The library consists of different headers.
+The bulk of this project has been coded in C++ for Arduino, with PlatformIO in Visual Studio Code, and shared between the group via GIT.
 - line header contains the code that is used for reading the line with line sensor
 - motors header contains the code that is used for controlling basic movements
 - rotation header contains the code that is used for counting pulses sent by rotation sensors and controlling the movements with rotation sensors

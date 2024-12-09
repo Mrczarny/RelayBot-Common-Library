@@ -7,8 +7,8 @@
 #define _wheelC (5.4 * PI)
 #define RobotC (11 * PI)
 
-static int _leftCount;
-static int _rightCount;
+static volatile int _leftCount;
+static volatile int _rightCount;
 static int COUNT_INTERVAL;
 
 class Rotation

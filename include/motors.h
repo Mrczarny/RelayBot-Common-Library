@@ -26,8 +26,11 @@ class Motors {
     void forward();
     void forward(int speed);
     void backward();
+    void backward(int speed);
     void zeroLeft();
+    void zeroLeft(int speed);
     void zeroRight();
+    void zeroRight(int speed);
     void right();
     void left();
     void stop();

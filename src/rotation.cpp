@@ -83,13 +83,9 @@ void Rotation::moveForwardFor(int distance)
 
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
-        // Somehow it's bugged without this 
-        Serial.println(_leftCount);
-        // Serial.println(_rightCount);
         _motors->forward();
     }
     _motors->stop();
-    // Serial.println("done");
 }
 
 /// @brief Just moves backward for a certain distance
@@ -100,12 +96,8 @@ void Rotation::moveBackwardFor(int distance)
     int leftSteps = _leftCount + steps;
     int rightSteps = _rightCount + steps;
 
-    //Serial.println(steps);
-
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
-        // Somehow it's bugged without this 
-        Serial.println(_leftCount);
         _motors->backward();
     }
     _motors->stop();
@@ -123,8 +115,6 @@ void Rotation::turnDegreesRight(int degrees)
 
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
-        // Somehow it's bugged without this 
-        Serial.println("s");
         _motors->zeroRight();
     }
     _motors->stop();
@@ -142,8 +132,6 @@ void Rotation::turnDegreesLeft(int degrees)
 
     while ((_leftCount < leftSteps) && (_rightCount < rightSteps))
     {
-        // Somehow it's bugged without this 
-        Serial.println(_leftCount);
         _motors->zeroLeft();
     }
     _motors->stop();

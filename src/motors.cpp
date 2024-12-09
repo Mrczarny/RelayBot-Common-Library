@@ -23,9 +23,9 @@ void Motors::forward() {
 
 void Motors::forward(int speed) {
   digitalWrite(_leftMotorDirectionPin, HIGH);                      // direction of left motor
-  analogWrite(_leftMotorSpeedPin, _maxLeftForwardSpeed*speed);     // speed of left motor 
+  analogWrite(_leftMotorSpeedPin, _maxLeftForwardSpeed*(speed*0.01));     // speed of left motor 
   digitalWrite(_rightMotorDirectionPin, HIGH);                     // direction of right motor
-  analogWrite(_rightMotorSpeedPin, _maxRightForwardSpeed*speed);   // speed of right motor 
+  analogWrite(_rightMotorSpeedPin, _maxRightForwardSpeed*(speed*0.01));   // speed of right motor 
 }
 
 void Motors::backward() {
@@ -35,6 +35,13 @@ void Motors::backward() {
   analogWrite(_rightMotorSpeedPin, _maxRightBackwardSpeed);    // speed of left motor
 }
 
+void Motors::backward(int speed) {
+  digitalWrite(_leftMotorDirectionPin, LOW);                       // direction of left motor
+  analogWrite(_leftMotorSpeedPin, _maxLeftBackwardSpeed*(speed*0.01));          // speed of left motor
+  digitalWrite(_rightMotorDirectionPin, LOW);                      // direction of right motor
+  analogWrite(_rightMotorSpeedPin, _maxRightBackwardSpeed*(speed*0.01));    // speed of left motor
+}
+
 void Motors::zeroLeft() {
   digitalWrite(_leftMotorDirectionPin, LOW);                       // direction of left motor
   analogWrite(_leftMotorSpeedPin, _maxLeftBackwardSpeed);          // speed of left motor
@@ -42,11 +49,26 @@ void Motors::zeroLeft() {
   analogWrite(_rightMotorSpeedPin, _maxRightForwardSpeed);         // speed of right motor
 }
 
+void Motors::zeroLeft(int speed) {
+  digitalWrite(_leftMotorDirectionPin, LOW);                      // direction of left motor
+  analogWrite(_leftMotorSpeedPin, _maxLeftForwardSpeed*(speed*0.01));       // speed of left motor
+  digitalWrite(_rightMotorDirectionPin, HIGH);                     // direction of right motor
+  analogWrite(_rightMotorSpeedPin, _maxRightForwardSpeed*(speed*0.01));         // speed of right motor
+}
+
+
 void Motors::zeroRight() {
   digitalWrite(_leftMotorDirectionPin, HIGH);                      // direction of left motor
   analogWrite(_leftMotorSpeedPin, _maxLeftForwardSpeed);           // speed of left motor
   digitalWrite(_rightMotorDirectionPin, LOW);                      // direction of right motor
   analogWrite(_rightMotorSpeedPin, _maxRightBackwardSpeed);        // speed of right motor
+}
+
+void Motors::zeroRight(int speed) {
+  digitalWrite(_leftMotorDirectionPin, HIGH);                      // direction of left motor
+  analogWrite(_leftMotorSpeedPin, _maxLeftForwardSpeed*(speed*0.01));           // speed of left motor
+  digitalWrite(_rightMotorDirectionPin, LOW);                      // direction of right motor
+  analogWrite(_rightMotorSpeedPin, _maxRightBackwardSpeed*(speed*0.01));         // speed of right motor
 }
 
 void Motors::right() {

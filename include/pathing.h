@@ -10,10 +10,18 @@ struct Map
     Node* nodes;
 };
 
+struct path
+{
+  Node* startNode;
+  Node* endNode;
+  int directions[];
+};
+
+
 struct Node
 {
     /// @brief all the possible openings of the node, if there is no opening, the pointer is NULL
-    /// @details openings[0] is the opening to the left looking from first recorded node, openings[3] is the opening to the right etc.
+    /// @details openings[0] is the opening to the left looking from first recorded node, openings[1] is forward one, openings[2] is the opening to the right.
     Node* openings[4];
     bool visited;
     bool deadEnd;
@@ -24,9 +32,9 @@ struct Node
 };
 
 
-class Path {
+class Pathing {
   public:
-    Path() {}
+    Pathing() {}
     Map _map;
     void addTurn(int direction);
     void addCrossroad(bool options[4]); 
@@ -34,7 +42,7 @@ class Path {
     void addStart();
     void addEnd();
     void setCurrentNode(Node* node);
-    void searchNearestUnvisited();
+    path searchForNearestUnvisited(Node* startNode, int directions[]);
     void visited();
   private:
     Node* _currentNode;

@@ -36,6 +36,10 @@ class Pathing {
   public:
     Pathing() {}
     Map _map;
+    Node* currentNode;
+    /// @brief HAS TO BE RELATIVE TO STARTING POINT!!!
+    /// @details 0 is left, 1 is forward, 2 is right, 3 is backward
+    int currentDirection;
     void addTurn(int direction);
     void addCrossroad(bool options[4]); 
     void addDeadEnd();
@@ -45,10 +49,6 @@ class Pathing {
     path searchForNearestUnvisited(Node* startNode, int directions[]);
     void visited();
   private:
-    Node* _currentNode;
-    /// @brief HAS TO BE RELATIVE TO STARTING POINT!!!
-    /// @details 0 is left, 1 is forward, 2 is right, 3 is backward
-    int _currentDirection;
     Node* _startNode;
     Node* _endNode;
     int _unvisitedNodes;

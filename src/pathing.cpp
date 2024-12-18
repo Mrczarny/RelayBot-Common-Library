@@ -2,7 +2,7 @@
 
 void Pathing::addTurn(int direction)
 {
-    _currentNode->openings[_currentDirection] = new Node {
+    currentNode->openings[currentDirection] = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = true,
         .deadEnd = false,
@@ -12,10 +12,10 @@ void Pathing::addTurn(int direction)
         .end = false
     };
 
-    _currentNode->openings[_currentDirection]
-    ->openings[getOpositeDirection(direction)] = _currentNode;
+    currentNode->openings[currentDirection]
+    ->openings[getOpositeDirection(direction)] = currentNode;
 
-    _currentNode->openings[direction] = new Node {
+    currentNode->openings[direction] = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = false,
         .deadEnd = false,
@@ -24,14 +24,14 @@ void Pathing::addTurn(int direction)
         .start = false,
         .end = false
     };
-    _currentNode->openings[direction]->openings[getOpositeDirection(direction)] = _currentNode;
+    currentNode->openings[direction]->openings[getOpositeDirection(direction)] = currentNode;
 
 }
 
 
 void Pathing::addCrossroad(bool options[4])
 {
-    _currentNode->openings[_currentDirection] = new Node {
+    currentNode->openings[currentDirection] = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = true,
         .deadEnd = false,
@@ -40,18 +40,18 @@ void Pathing::addCrossroad(bool options[4])
         .start = false,
         .end = false
     };
-    _currentNode->openings[_currentDirection]->openings[getOpositeDirection(_currentDirection)] = _currentNode;
+    currentNode->openings[currentDirection]->openings[getOpositeDirection(currentDirection)] = currentNode;
 
-    _currentNode = _currentNode->openings[_currentDirection];
+    currentNode = currentNode->openings[currentDirection];
 
-    _currentNode->crossroad = true;
+    currentNode->crossroad = true;
 
     
     for (int i = 0; i < 4; i++)
     {
-        if (options[i] && _currentNode->openings[i] == NULL)
+        if (options[i] && currentNode->openings[i] == NULL)
         {
-            _currentNode->openings[i] = new Node {
+            currentNode->openings[i] = new Node {
                 .openings = {NULL, NULL, NULL, NULL},
                 .visited = false,
                 .deadEnd = false,
@@ -60,7 +60,7 @@ void Pathing::addCrossroad(bool options[4])
                 .start = false,
                 .end = false
             };
-            _currentNode->openings[i]->openings[getOpositeDirection(i)] = _currentNode;
+            currentNode->openings[i]->openings[getOpositeDirection(i)] = currentNode;
         }
     }
 }
@@ -68,7 +68,7 @@ void Pathing::addCrossroad(bool options[4])
 
 void Pathing::addDeadEnd()
 {
-    _currentNode->openings[_currentDirection] = new Node {
+    currentNode->openings[currentDirection] = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = true,
         .deadEnd = true,
@@ -77,14 +77,14 @@ void Pathing::addDeadEnd()
         .start = false,
         .end = false
     };
-    _currentNode->openings[_currentDirection]->openings[getOpositeDirection(_currentDirection)] = _currentNode;
-    _currentNode = _currentNode->openings[_currentDirection];
+    currentNode->openings[currentDirection]->openings[getOpositeDirection(currentDirection)] = currentNode;
+    currentNode = currentNode->openings[currentDirection];
 }
 
 
 void Pathing::addStart()
 {
-    _currentNode = new Node {
+    currentNode = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = true,
         .deadEnd = false,
@@ -93,13 +93,13 @@ void Pathing::addStart()
         .start = true,
         .end = false
     };
-    _startNode = _currentNode;
-    _map.nodes = _currentNode;
+    _startNode = currentNode;
+    _map.nodes = currentNode;
 }
 
 void Pathing::addEnd()
 {
-    _currentNode->openings[_currentDirection] = new Node {
+    currentNode->openings[currentDirection] = new Node {
         .openings = {NULL, NULL, NULL, NULL},
         .visited = true,
         .deadEnd = false,
@@ -108,8 +108,8 @@ void Pathing::addEnd()
         .start = false,
         .end = true
     };
-    _currentNode->openings[_currentDirection]->openings[getOpositeDirection(_currentDirection)] = _currentNode;
-    _endNode = _currentNode;
+    currentNode->openings[currentDirection]->openings[getOpositeDirection(currentDirection)] = currentNode;
+    _endNode = currentNode;
 }
 
 
@@ -117,7 +117,7 @@ void Pathing::addEnd()
 /// @param node the node to set as current
 void Pathing::setCurrentNode(Node* node)
 {
-    _currentNode = node;
+    currentNode = node;
 }
 
 path Pathing::searchForNearestUnvisited(Node* node, int directions[])
@@ -149,7 +149,7 @@ path Pathing::searchForNearestUnvisited(Node* node, int directions[])
 
 void Pathing::visited()
 {
-    _currentNode->visited = true;
+    currentNode->visited = true;
 }
 
 int Pathing::getOpositeDirection(int direction)

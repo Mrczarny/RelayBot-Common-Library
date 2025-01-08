@@ -22,7 +22,7 @@ struct lineSensorData
 } typedef lineSensorData;
 
 
-
+static uint8_t convertToBinary(lineSensorData line);
 
 class Line
 {
@@ -51,6 +51,7 @@ public:
     lineSensorData readLine();
     linePoint readLinePoint(int pointPosition);
 };
+
 
 
 #endif

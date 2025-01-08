@@ -25,7 +25,7 @@ void Line::setup(int breakPoints[]) {
 /// @return lineSensorData - struct with all the sensor points
 lineSensorData Line::readLine() {
     lineSensorData data;
-    for (int i = 0; i < _sensorsNumber; i++)
+    for (int i = 0; i < 8; i++)
     {
         data.linePoints[i] = readLinePoint(i);
     }
@@ -40,6 +40,7 @@ linePoint Line::readLinePoint(int pointPosition) {
     linePoint data;
     data.pointPosition = -1;
     data.sensorValue = -1;
+    data.isLine = false;
     if (_sensorPins[pointPosition] != NULL)
     {
         data.pointPosition = pointPosition;

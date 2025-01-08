@@ -55,7 +55,7 @@ linePoint Line::readLinePoint(int pointPosition) {
 /// @brief converts the line sensor data to a binary number
 /// @param line data from the line sensor
 /// @return uint8_t - binary number (0b00000000)
-static uint8_t convertToBinary(lineSensorData line)
+uint8_t convertToBinary(lineSensorData line)
 {
     uint8_t decimal = 0b00000000;
     for (int i = 0; i < 8; i++)

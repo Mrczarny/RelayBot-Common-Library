@@ -22,7 +22,7 @@ struct lineSensorData
 } typedef lineSensorData;
 
 
-static uint8_t convertToBinary(lineSensorData line);
+uint8_t convertToBinary(lineSensorData line);
 
 class Line
 {

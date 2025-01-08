@@ -14,10 +14,11 @@ class Gripper {
 
     }
     void gripper(int position);
-    private:
-    int _ServoPin;
     const int _OpenGripper;
     const int _CloseGripper;
+    private:
+    int _ServoPin;
+    
 };
 
 #endif

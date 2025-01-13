@@ -137,4 +137,49 @@ void Rotation::turnDegreesLeft(int degrees)
     _motors->stop();
 }
 
+void Rotation::leftTurnFor(int distance)
+{    
+  int steps = (distance / _wheelC) * 40;
+  int leftSteps = _leftCount + steps;
+  int rightSteps = _rightCount + steps;
+  static unsigned long timer;
+  if (millis() > timer)
+  {
+    while(_leftCount < leftSteps && _rightCount < rightSteps)
+      {
+       _motors->left();
+      }
+      
+    timer = millis()+500;
+  }
+   _motors->stop();
+}
 
+void Rotation::rightTurnFor(int distance)
+{    
+  int steps = (distance / _wheelC) * 40;
+  int leftSteps = _leftCount + steps;
+  int rightSteps = _rightCount + steps;
+  static unsigned long timer;
+  if (millis() > timer)
+  {
+    while(_leftCount < leftSteps && _rightCount < rightSteps)
+      {
+       _motors->right();
+      }
+      
+    timer = millis()+500;
+  }
+   _motors->stop();
+}
+
+// Function to get the total distance traveled
+float getTotalDistance()
+{
+    // Distance traveled for each wheel, using the counts and distance per pulse
+    float leftDistance = _leftCount * _DISTANCE_PER_PULSE;
+    float rightDistance = _rightCount * _DISTANCE_PER_PULSE;
+    
+    // Return the average distance between left and right to account for potential drift or slippage
+    return (leftDistance + rightDistance) / 2.0;  // Distance in centimeters
+}

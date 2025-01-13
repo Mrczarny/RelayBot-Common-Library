@@ -15,6 +15,8 @@ static void leftRotationCheck()
         if (state != lastState)
         {
             _leftCount++;
+            //Serial.print("Left Count Updated: ");
+            //Serial.println(_leftCount);
             lastState = state;
         }
         timer = millis() + COUNT_INTERVAL;
@@ -33,12 +35,15 @@ static void rightRotationCheck()
         if (state != lastState)
         {
             _rightCount++;
+            //Serial.print("Right Count Updated: ");
+            //Serial.println(_rightCount);
             lastState = state;
         }
         timer = millis() + COUNT_INTERVAL;
     }
     interrupts();
 }
+
 
 /// @brief Construct a new Rotation:: Rotation object
 /// @param leftMotorRotation left motor rotation pin
@@ -173,13 +178,36 @@ void Rotation::rightTurnFor(int distance)
    _motors->stop();
 }
 
-// Function to get the total distance traveled
-float getTotalDistance()
+/// Function to get the total distance traveled
+float Rotation::getTotalDistance()
 {
-    // Distance traveled for each wheel, using the counts and distance per pulse
+    static unsigned long timer;
+    if (millis() > timer)
+  {
+    // Print the counts
+    //Serial.print("Left Count: ");
+    //Serial.println(_leftCount);
+    //Serial.print("Right Count: ");
+    //Serial.println(_rightCount);
+    //Serial.print("Distance per pulse: ");
+    //Serial.println(_DISTANCE_PER_PULSE);
+
+    // Calculate distance for each wheel
     float leftDistance = _leftCount * _DISTANCE_PER_PULSE;
     float rightDistance = _rightCount * _DISTANCE_PER_PULSE;
-    
+
+    // Print the distance before returning
+    //Serial.print("Left Distance in CM: ");
+    //Serial.println(leftDistance);
+    //Serial.print("Right Distance in CM: ");
+    //Serial.println(rightDistance);
+
     // Return the average distance between left and right to account for potential drift or slippage
-    return (leftDistance + rightDistance) / 2.0;  // Distance in centimeters
+    _totalDistance = (leftDistance + rightDistance) / 2.0;  // Distance in centimeters
+    Serial.print("Total Distance in CM: ");
+    Serial.println(_totalDistance);
+
+    return _totalDistance;  // Return the total distance
+    timer = millis()+500;
+  }
 }

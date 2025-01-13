@@ -82,7 +82,7 @@ void rotationStop();
 void rotationLeftTurnFix(float distance);
 void lineFollow();
 void objectAvoid();
-// uint8_t convertToBinary(lineSensorData line);
+uint8_t convertToBinary(lineSensorData line);
 int detectChange();
 bool compareArray(int array1[], int array2[]);
 void moveWithLine();
@@ -96,7 +96,6 @@ void setup()
 {
   Serial.begin(9600);
   HC12.begin(9600);
-  Serial.println("Slave: Ready to receive requests.");
   pinMode(SONAR_ECHO_PIN, INPUT);
   pinMode(SONAR_TRIGGER_PIN, OUTPUT);
   pinMode(LEFT_MOTOR_ROTATION, INPUT_PULLUP);
@@ -118,124 +117,129 @@ void setup()
 
 void loop() 
 {
-  slaveCommunication();
+  Serial.println("Loop is running");
+
+  //slaveCommunication();
   //startMaze();
 
-  lineState = line.readLine();
-  uint8_t decimal = convertToBinary(lineState);
-
-  switch (decimal)
-  {
-  default:
-    break;
-
-  case 0b00011000:
-    motors.forward();
-    break;
-  case 0b01110000:
-  case 0b00110000:
-  case 0b01100000:
-  case 0b11000000:
-  case 0b00111000:
-    motors.zeroRight();
-    break;
-  case 0b00001100:
-  case 0b00001110:
-  case 0b00000110:
-  case 0b00000011:
-  case 0b00011100:
-    motors.zeroLeft();
-    break;
-  case 0b11101100:
-  case 0b11011000:
-  case 0b11111100:
-  case 0b11111000:
-    rotation.moveForwardFor(5);
-    // rotation.turnDegreesRight(90);
-    Serial.print("zeroRight");
-    for (size_t i = 0; i < 8; i++)
-    {
-      Serial.print(lineState.linePoints[i].isLine);
-    }
-
-    Serial.println();
-    while (convertToBinary(line.readLine()) != 0b00011000)
-    {
-      motors.zeroRight(70);
-    }
-    break;
-  case 0b00010111:
-  case 0b00111111:
-  case 0b00011011:
-  case 0b00011111:
-    rotation.moveForwardFor(5);
-    // rotation.turnDegreesLeft(90);
-    Serial.print("zeroLeft");
-    for (size_t i = 0; i < 8; i++)
-    {
-      Serial.print(lineState.linePoints[i].isLine);
-    }
-    Serial.println();
-    while (convertToBinary(line.readLine()) != 0b00011000)
-    {
-      motors.zeroLeft(70);
-    }
-    break;
-  case 0b11111111:
-    rotation.moveForwardFor(5);
-    if (convertToBinary(line.readLine()) == 0b11111111)
-    {
-      // the end
-      motors.stop();
-      while (1)
-        ;
-    }
-    else if (convertToBinary(line.readLine()) == 0b00011000)
-    {
-      Serial.print("crossroad zeroRight");
-      for (size_t i = 0; i < 8; i++)
-      {
-        Serial.print(lineState.linePoints[i].isLine);
-      }
-      Serial.println();
-      rotation.moveForwardFor(5);
-      // rotation.turnDegreesLeft(90);
-      while (convertToBinary(line.readLine()) != 0b00011000)
-      {
-        motors.zeroRight();
-      }
-    }
-    else if (convertToBinary(line.readLine()) != 0b00000000)
-    {
-      Serial.print("T-crossroad zeroLeft");
-      for (size_t i = 0; i < 8; i++)
-      {
-        Serial.print(lineState.linePoints[i].isLine);
-      }
-      Serial.println();
-      while (convertToBinary(line.readLine()) != 0b00011000)
-      {
-        motors.zeroLeft();
-      }
-    }
-
-    break;
-  case 0b00000000:
-    rotation.moveForwardFor(5);
-    rotation.turnDegreesRight(180);
-    Serial.print("turn around");
-    for (size_t i = 0; i < 8; i++)
-    {
-      Serial.print(lineState.linePoints[i].isLine);
-    }
-    Serial.println();
-    while (convertToBinary(line.readLine()) != 0b00011000)
-    {
-      motors.zeroLeft();
-    }
-
-    break;
-  }
+  rotation.getTotalDistance();
+  
+//
+  //lineState = line.readLine();
+  //uint8_t decimal = convertToBinary(lineState);
+//
+  //switch (decimal)
+  //{
+  //default:
+  //  break;
+//
+  //case 0b00011000:
+  //  motors.forward();
+  //  break;
+  //case 0b01110000:
+  //case 0b00110000:
+  //case 0b01100000:
+  //case 0b11000000:
+  //case 0b00111000:
+  //  motors.zeroRight();
+  //  break;
+  //case 0b00001100:
+  //case 0b00001110:
+  //case 0b00000110:
+  //case 0b00000011:
+  //case 0b00011100:
+  //  motors.zeroLeft();
+  //  break;
+  //case 0b11101100:
+  //case 0b11011000:
+  //case 0b11111100:
+  //case 0b11111000:
+  //  rotation.moveForwardFor(5);
+  //  // rotation.turnDegreesRight(90);
+  //  Serial.print("zeroRight");
+  //  for (size_t i = 0; i < 8; i++)
+  //  {
+  //    Serial.print(lineState.linePoints[i].isLine);
+  //  }
+//
+  //  Serial.println();
+  //  while (convertToBinary(line.readLine()) != 0b00011000)
+  //  {
+  //    motors.zeroRight(70);
+  //  }
+  //  break;
+  //case 0b00010111:
+  //case 0b00111111:
+  //case 0b00011011:
+  //case 0b00011111:
+  //  rotation.moveForwardFor(5);
+  //  // rotation.turnDegreesLeft(90);
+  //  Serial.print("zeroLeft");
+  //  for (size_t i = 0; i < 8; i++)
+  //  {
+  //    Serial.print(lineState.linePoints[i].isLine);
+  //  }
+  //  Serial.println();
+  //  while (convertToBinary(line.readLine()) != 0b00011000)
+  //  {
+  //    motors.zeroLeft(70);
+  //  }
+  //  break;
+  //case 0b11111111:
+  //  rotation.moveForwardFor(5);
+  //  if (convertToBinary(line.readLine()) == 0b11111111)
+  //  {
+  //    // the end
+  //    motors.stop();
+  //    while (1)
+  //      ;
+  //  }
+  //  else if (convertToBinary(line.readLine()) == 0b00011000)
+  //  {
+  //    Serial.print("crossroad zeroRight");
+  //    for (size_t i = 0; i < 8; i++)
+  //    {
+  //      Serial.print(lineState.linePoints[i].isLine);
+  //    }
+  //    Serial.println();
+  //    rotation.moveForwardFor(5);
+  //    // rotation.turnDegreesLeft(90);
+  //    while (convertToBinary(line.readLine()) != 0b00011000)
+  //    {
+  //      motors.zeroRight();
+  //    }
+  //  }
+  //  else if (convertToBinary(line.readLine()) != 0b00000000)
+  //  {
+  //    Serial.print("T-crossroad zeroLeft");
+  //    for (size_t i = 0; i < 8; i++)
+  //    {
+  //      Serial.print(lineState.linePoints[i].isLine);
+  //    }
+  //    Serial.println();
+  //    while (convertToBinary(line.readLine()) != 0b00011000)
+  //    {
+  //      motors.zeroLeft();
+  //    }
+  //  }
+//
+  //  break;
+  //case 0b00000000:
+  //  rotation.moveForwardFor(5);
+  //  rotation.turnDegreesRight(180);
+  //  Serial.print("turn around");
+  //  for (size_t i = 0; i < 8; i++)
+  //  {
+  //    Serial.print(lineState.linePoints[i].isLine);
+  //  }
+  //  Serial.println();
+  //  while (convertToBinary(line.readLine()) != 0b00011000)
+  //  {
+  //    motors.zeroLeft();
+  //  }
+//
+  //  break;
+  //}
 }
 
 // movement.cpp
@@ -644,18 +648,18 @@ int detectChange()
   return 0;
 }
 
-// uint8_t convertToBinary(lineSensorData line)
-// {
-//   uint8_t decimal = 00000000;
-//   for (int i = 0; i < 8; i++)
-//   {
-//     if (line.linePoints[i].isLine)
-//     {
-//       decimal |= 1 << i;
-//     }
-//   }
-//   return decimal;
-// }
+uint8_t convertToBinary(lineSensorData line)
+{
+  uint8_t decimal = 00000000;
+  for (int i = 0; i < 8; i++)
+  {
+    if (line.linePoints[i].isLine)
+    {
+      decimal |= 1 << i;
+    }
+  }
+  return decimal;
+}
 
 int intersection[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 int left[8] = {0, 0, 0, 0, 1, 1, 1, 1};

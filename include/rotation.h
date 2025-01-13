@@ -13,6 +13,7 @@
 static volatile int _leftCount;
 static volatile int _rightCount;
 static int COUNT_INTERVAL;
+static volatile float _totalDistance;
 
 class Rotation
 {

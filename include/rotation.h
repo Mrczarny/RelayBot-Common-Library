@@ -22,6 +22,7 @@ public:
     void moveBackwardFor(int distance);
     void turnDegreesRight(int degrees);
     void turnDegreesLeft(int degrees);
+    float calculateSpeed();
 
 private:
     int _leftMotorRotationPin;

@@ -137,4 +137,38 @@ void Rotation::turnDegreesLeft(int degrees)
     _motors->stop();
 }
 
+//SPEED
+/// @brief Calculate the speed of the robot in cm/s.
+/// @details Uses the wheel rotation counts to determine the distance traveled over a time interval.
+/// @return The speed of the robot in cm/s.
+float Rotation::calculateSpeed()
+{
+    static unsigned long lastTime = 0;
+    static int lastLeftCount = 0;
+    static int lastRightCount = 0;
+
+    unsigned long currentTime = millis();
+    int currentLeftCount = _leftCount;
+    int currentRightCount = _rightCount;
+
+    // Calculate the time difference in seconds
+    float timeElapsed = (currentTime - lastTime) / 1000.0;
+
+    if (timeElapsed == 0) {
+        return 0; // Prevent division by zero
+    }
+
+    // Calculate the average distance traveled by both wheels
+    float leftDistance = (currentLeftCount - lastLeftCount) * (_wheelC / 40.0);
+    float rightDistance = (currentRightCount - lastRightCount) * (_wheelC / 40.0);
+    float averageDistance = (leftDistance + rightDistance) / 2.0;
+
+    // Update the last recorded values
+    lastTime = currentTime;
+    lastLeftCount = currentLeftCount;
+    lastRightCount = currentRightCount;
+
+    // Calculate and return the speed
+    return averageDistance / timeElapsed;
+}
 
